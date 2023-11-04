@@ -101,7 +101,7 @@ color: black;
         <tr>
     <td><%= categoria.id %></td>
     <td><%= categoria.nombre %></td>
-     <td class="d-flex gap-2">
+     <td class="d-flex gap-2" >
                     <a href="/admin/categorias/update/<%= categoria.id %>" class="btn btn-warning btn-sm" >
                       Modificar
                     </a>
@@ -148,8 +148,8 @@ color: black;
                 <td><%= producto.marca%></td>
                 <td><%= producto.tamaño %></td>
                 <td><%= producto.categoria_id %></td>
-                <td class="d-flex gap-2">
-                    <a href="/admin/productos/update/<%= producto.id %>" class="btn btn-warning" >
+                <td style="vertical-align: middle;">
+                    <a href="/admin/productos/update/<%= producto.id %>" class="btn btn-warning" style="margin-bottom: 20px;" >
                       Modificar
                     </a>
                     <a href="/admin/productos/delete/<%= producto.id %>" class="btn btn-danger">
