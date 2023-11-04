@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BlondeGarden</title>
+    <!-- NAVIGATION -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+  </head>
+  <body>
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a href="/" class="navbar-brand">BlondeGarden</a>
+      </div>
+    </nav>
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h2 style="font-weight: bold;">Inicio de sesión</h2>
+                </div>
+                <div class="card-body">
+                    <form action="/login" method="POST">
+                        <div style="text-align: center;">
+                            <h5 class="mt-3" style="font-weight: bold;">Usuario</h5>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" placeholder="Ingrese su usuario" class="form-control" required>
+                        </div>
+                        <div style="text-align: center;">
+                            <h5 class="mt-3" style="font-weight: bold;">Contraseña</h5>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" placeholder="Ingrese su contraseña" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type ="submit" class="btn btn-success btn-block mt-3">
+                                Iniciar sesión
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

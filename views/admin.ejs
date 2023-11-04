@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BlondeGarden</title>
+    <!-- NAVIGATION -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+  </head>
+<head>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a href="/" class="navbar-brand">BlondeGarden</a>
+      <a href="/logout"  style="color:white">Cerrar sesión</a>
+    </div>
+  </nav>
+</head>
+<style>
+html{
+height:100%;
+}
+main{
+width: 80%;
+height: 100%;
+margin:0 auto;
+background: aliceblue;
+}
+.lateral{
+box-sizing: border-box;
+width: max(8%, 300px);
+display: inline-block;
+position: absolute;
+}
+.principal{
+margin-left: max(10%, 300px);
+padding: 0 10px;
+height: 200%;
+text-align: justify;
+background:  #e4ebf5;
+border-left: 2px solid black;
+}
+/*Hasta aquí ya tenemos un menu lateral fijo,
+ahora viene ponerlo bonito*/
+
+.lateral header{
+font-weight: bold;
+font-size: 1.5rem;
+text-align: center;
+border-bottom: 1px solid black;
+border-right: 1px solid black;
+}
+.lateral ul{
+list-style:none;
+padding-left:0;
+margin-top:0;
+border-right: 1px solid black;
+}
+.lateral ul li{
+display:block;
+position: relative;
+padding: 8px 10px;
+margin-left:0;
+border-bottom:1px solid black
+}
+.lateral ul li a{
+color: black;
+text-decoration:none; 
+}
+.lateral ul li a:after{
+content: ' ';
+position:absolute;
+width: 100%;
+height: 100%;
+top:0;
+left:0;
+}
+.lateral ul li:hover, .lateral ul li:hover a{
+background: #bed1e6;
+color: black;
+}
+.div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+ 
+ 
+ 
+  </style>
+<body>
+  
+  <div class="lateral">
+    <h4 style="text-align: center;">Categoria</h4>
+    <table class="table table-hover">
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        </tr>
+        <tbody>
+        
+      <% categorias.forEach(categoria => { %>
+        <tr>
+    <td><%= categoria.id %></td>
+    <td><%= categoria.nombre %></td>
+     <td class="d-flex gap-2">
+                    <a href="/admin/categorias/update/<%= categoria.id %>" class="btn btn-warning btn-sm" >
+                      Modificar
+                    </a>
+                    <a href="/admin/categorias/delete/<%= categoria.id %>" class="btn btn-danger btn-sm">
+                      Eliminar
+                    </a>
+                  </td>
+    <% }); %>
+  
+  </tr>
+</tbody>
+  </table>
+  <div class="div-centrado">
+  <a class="btn btn-success btn-sm" href="/admin/categorias/crear">Crear Categoria</a>
+</div>
+    </div>
+    
+    <div class="principal">
+      <table class="table table-hover">
+        <thead>
+          <h2 style="text-align: center;">Productos (<%= productos.length %>)</h2>
+          <div class="div-centrado"><a class="btn btn-primary" href="/admin/productos/crear">Añadir</a> </div>
+          
+          <tr style="border: 2px solid black;">
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Código</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Tamaño</th>
+            <th scope="col">Id. Categoria</th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+           <% for(const producto of productos) {
+              %>
+              <tr style="border: 2px solid black;">
+                <td><%= producto.id %></td>
+                <td><%= producto.nombre %></td>
+                <td><%= producto.codigo %></td>
+                <td><%= producto.precio %></td>
+                <td><%= producto.descripcion %></td>
+                <td><%= producto.marca%></td>
+                <td><%= producto.tamaño %></td>
+                <td><%= producto.categoria_id %></td>
+                <td class="d-flex gap-2">
+                    <a href="/admin/productos/update/<%= producto.id %>" class="btn btn-warning" >
+                      Modificar
+                    </a>
+                    <a href="/admin/productos/delete/<%= producto.id %>" class="btn btn-danger">
+                      Eliminar
+                    </a>
+                  </td>
+              </tr>
+              <% } %>
+          </tbody>
+</table>
+<table class="table table-hover">
+        <thead>
+          <div style="border: 1px solid black;"></div>
+          <h2 style="text-align: center; margin-top: 10px;">Imagenes</h2>
+          <div class="div-centrado"><a class="btn btn-primary" href="/admin/imagenes/crear">Añadir</a> </div>
+          
+          <tr style="border: 2px solid black;">
+            <th  scope="col">Id</th>
+            <th scope="col">URL</th>
+            <th scope="col">Destacado</th>
+            <th scope="col">Id.Producto</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+           <% for(const imagen of imagenes) {
+              %>
+              <tr style="border: 2px solid black;">
+                <td><%= imagen.id %></td>
+                <td><img src="<%= imagen.url %>" style="border: 2px solid black;"></td>
+                <td style="vertical-align: middle;"><%= imagen.destacado %></td>
+                <td style="vertical-align: middle;"><%= imagen.producto_id %></td>
+                <td style="vertical-align: middle;">
+                    <a href="/admin/imagenes/update/<%= imagen.id %>" class="btn btn-warning" >
+                      Modificar
+                    </a>
+                  </td>
+                    <td style="vertical-align: middle;">
+                    <a href="/admin/imagenes/delete/<%= imagen.id %>" class="btn btn-danger">
+                      Eliminar
+                    </a>
+                  </td>
+              </tr>
+              <% } %>
+          </tbody>
+</table>
+</div>
+</body>
+</html>
