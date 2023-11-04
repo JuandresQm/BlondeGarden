@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -330,16 +329,3 @@ db.run(` CREATE TABLE IF NOT EXISTS imagenes (
     producto_id INTEGER,
     FOREIGN KEY(producto_id) REFERENCES productos(id)
 )`);
-=======
-var express = require('express');
-var app = express();
-
-app.set('view engine', 'ejs');
-
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
-app.listen(3000);
-console.log('Online');
->>>>>>> origin/main

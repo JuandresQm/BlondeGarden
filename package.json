@@ -2,7 +2,6 @@
   "name": "node-ejs",
   "main": "server.js",
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
@@ -19,10 +18,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
-=======
+  "description": "",
+
     "ejs": "^3.1.5",
     "express": "^4.17.1"
   }
->>>>>>> origin/main
-}
