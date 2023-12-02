@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BlondeGarden</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-  </head>
-  <body>
+    <title>Crear Producto</title>
+    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
+</head>
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a href="/" class="navbar-brand">BlondeGarden</a>
-      </div>
-      </nav>
-      <div class="container p-4">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+                BlondeGarden
+            </a>
+        </div>
+    </nav>
+    <style>
+        .navbar-brand {
+           display: flex;
+           align-items: center;
+         }
+       
+         .navbar-brand img {
+           height: 2em; /* Ajusta la altura de la imagen al tamaño del texto */
+           margin-right: 1px; /* Espacio entre la imagen y el texto */
+         }
+         </style>
+    <div class="container p-4">
         <div class="row">
             <div class="col-md-4 mx-auto">
                 <div class="card text-center">
@@ -19,59 +35,75 @@
                     </div>
                     <div class="card-body">
                         <form action="/admin/productos/crear" method="POST">
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Nombre</h6>
+                            <div class="form-group">
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre" class="form-control" required maxlength="255">
+                                    <label for="nombre">Nombre</label>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre" class="form-control" required>
-                            </div>
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Código</h6>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="codigo" id="codigo" placeholder="Ingrese el codigo " class="form-control" required>
-                            </div>
-                             <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Precio</h6>
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="text" name="codigo" id="codigo" placeholder="Ingrese el código" class="form-control" required maxlength="255">
+                                    <label for="codigo">Código</label>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="number" name="precio" id="precio" placeholder="Ingrese el precio " class="form-control" min="1" step="0.01" required>
-                            </div>
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Descripción</h6>
-                            </div>
-                            <div class="form-group">
-                                <textarea maxlength="500" name="descripcion" id="descripcion" class="form-control" required></textarea>
-                            </div>
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Marca</h6>
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="number" name="precio" id="precio" placeholder="Ingrese el precio" class="form-control" min="1" step="0.01" required max="1000000">
+                                    <label for="precio">Precio</label>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="marca" id="marca" placeholder="Ingrese la marca" class="form-control" required>
-                            </div>
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Tamaño</h6>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="tamaño" id="tamaño" placeholder="Ingrese el tamaño" class="form-control" required>
-                            </div>
-                            <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Categoria</h6>
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <textarea maxlength="500" name="descripcion" id="descripcion" class="form-control" required maxlength="255"></textarea>
+                                    <label for="descripcion">Descripción</label>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="number" name="categoria_id" id="categoria_id" placeholder="Ingrese la id de la categoria" class="form-control" min="1" required>
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="text" name="marca" id="marca" placeholder="Ingrese la marca" class="form-control" required maxlength="255">
+                                    <label for="marca">Marca</label>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <button type ="submit" class="btn btn-success btn-block mt-3">
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <select name="uso" id="uso" class="form-select">
+                                        <option selected disabled value="">Ingrese uso</option>
+                                        <option value="Multiuso">Multiuso</option>
+                                        <option value="Interior">Interior</option>
+                                        <option value="Exterior">Exterior</option>
+                                    </select>
+                                    <label for="uso">Uso</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <select name="categoria_id" id="categoria_id" class="form-select">
+                                        <option value="" selected disabled>Categorías</option>
+                                        <% if (categorias && categorias.length > 0) { %>
+                                            <% categorias.forEach((categoria) => { %>
+                                                <% if (categoria) { %>
+                                                    <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+                                                <% } %>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <option value="">No existen categorías en el sistema</option>
+                                        <% } %>
+                                    </select>
+                                    <label for="categoria_id">Categorías</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block mt-3">
                                     Crear
                                 </button>
-                               
-                            </div> 
+                                <a href="/admin" class="btn btn-success btn-block mt-3">Cancelar</a>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </body>
+</body>
 </html>

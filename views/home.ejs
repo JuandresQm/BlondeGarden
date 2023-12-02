@@ -1,20 +1,243 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BlondeGarden</title>
-    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-  </head>
-  <body>
+    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
+<head>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a href="/" class="navbar-brand">BlondeGarden</a>
-        <a href="/login" style="color:white">Iniciar sesión</a>
-      </div>
-      </nav>
-      <div class="card text-center" >
-      <div class="card-header" >
-        <h2 style="font-weight: bold;">Bienvenido</h2>
+        <div class="container">
+          <a href="/" class="navbar-brand">
+            <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+            BlondeGarden
+          </a>
+          
         </div>
+        <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
+      </nav>
+    <Title>BlondeGarden</Title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    <style>
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 2em; /* Ajusta la altura de la imagen al tamaño del texto */
+            margin-right: 1px; /* Espacio entre la imagen y el texto */
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .custom-col {
+            margin-bottom: 1.5rem;
+        }
+        .shadow-border {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+html{
+height:100%;
+}
+main{
+width: 80%;
+height: 100%;
+margin:0 auto;
+background: aliceblue;
+}
+.lateral{
+box-sizing: x(8%, 300px);
+width: max(8%, 300px);
+display: inline-block;
+position: absolute;
+}
+.principal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  margin-left: max(10%, 330px);
+  padding: 0 5px;
+  text-align: justify;
+  background: #e4ebf5;
+}
+/*Hasta aquí ya tenemos un menu lateral fijo,
+ahora viene ponerlo bonito*/
+
+.lateral header{
+font-weight: bold;
+font-size: 1.5rem;
+text-align: center;
+}
+.lateral ul{
+list-style:none;
+padding-left:0;
+margin-top:0;
+}
+.lateral ul li{
+display:block;
+position: relative;
+padding: 8px 10px;
+margin-left:0;
+
+}
+.lateral ul li a{
+color: black;
+text-decoration:none; 
+}
+.lateral ul li a:after{
+content: ' ';
+position:absolute;
+width: 100%;
+height: 100%;
+top:0;
+left:0;
+}
+.lateral ul li:hover, .lateral ul li:hover a{
+background: #bed1e6;
+color: black;
+}
+.div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+      background-color: var(--bs-primary); /* Color para filas impares */
+    }
+
+    .table-striped tbody tr:nth-of-type(even) {
+      background-color: var(--bs-secondary); /* Color para filas pares */
+    }
+        .shadow-border {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  </style>
+<body>
+    <div class="lateral">
+        <form action="/buscar" method="post">
+          <div style="margin: 15px;">
+            <div class="form-floating" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" placeholder="Buscar producto" aria-describedby="button-addon2" id="nombre" name="nombre" style="width: 300px;">
+              <label for="nombre">Buscar producto</label>
+            </div>
+          </div>
+          <div style="margin: 15px;">
+            <div class="form-floating" style="margin-bottom: 20px;">
+              <input type="text" class="form-control" placeholder="Buscar descripción" aria-describedby="button-addon2" id="descripcion" name="descripcion" style="width: 300px;">
+              <label for="descripcion">Buscar descripción</label>
+            </div>
+          </div>
+          <div class="form-floating" style="margin-bottom: 20px;">
+            <select name="categoria" id="categoria" class="form-select" style="margin: 15px; width: 300px;">
+              <option value="" selected>Ingrese categoría</option>
+              <% categorias.forEach(categoria => { %>
+              <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+              <% }); %>
+            </select>
+            <label for="categoria">Categorías</label>
+          </div>
+          <div class="form-floating" style="margin-bottom: 20px;">
+            <select name="uso" id="uso" class="form-select" style="margin: 15px; width: 300px;">
+                <option selected disabled value="">Ingrese uso</option>
+                <option value="Multiuso">Multiuso</option>
+                <option value="Interior">Interior</option>
+                <option value="Exterior">Exterior</option>
+            </select>
+            <label for="uso">Uso</label>
+        </div>
+        <% var marcasUnicas = new Set(); %>
+        <div class="form-floating" style="margin-bottom: 20px;">
+            <select name="marca" id="marca" class="form-select" style="margin: 15px; width: 300px;">
+              <option value="" selected>Ingrese marca</option>
+              <% productos.forEach(producto => {
+                if (!marcasUnicas.has(producto.marca)) {
+                    marcasUnicas.add(producto.marca);
+            %>
+            <option value="<%= producto.marca %>"><%= producto.marca %></option>
+            <% }}); %>
+            </select>
+            <label for="marca">Marcas</label>
+          </div>
+          <div style="margin-left: 45px;">
+          <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
+          <a class="btn btn-primary"  href="/">Restablecer</a>
+        </div>
+        </form>
       </div>
-  </body>
+    <body>
+    <div class="principal">
+        <div class="card text-center shadow-border">
+            <div class="card-header">
+                <h2 style="font-weight: bold;">Bienvenido</h2>
+<div class="btn-group" role="group" aria-label="Vista de productos">
+  <input type="radio" class="btn-check" name="vistaProductos" id="btnCuadricula" autocomplete="off" checked>
+  <label class="btn btn-outline-primary" for="btnCuadricula">Cuadrícula</label>
+  <input type="radio" class="btn-check" name="vistaProductos" id="btnLista" autocomplete="off">
+  <label class="btn btn-outline-primary" for="btnLista">Lista</label>
+</div>
+            </div>
+            <div class="card-body  justify-content-center ">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <% for(const producto of productos) { %>
+                        <% for(const imagen of imagenes) { %>
+                            <% if (imagen.producto_id == producto.id && imagen.destacado == "Si") { %>
+                                <div class="col custom-col">
+                                    <a href="/info/<%= producto.id%>">
+                                        <div class="card bg-light mb-3 text-center h-100 shadow-border ">
+                                            <div class="card-header" >
+                                                <h4 style="margin-top: 10px; font-weight: bold;"><%= producto.nombre %></h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <img src="<%= imagen.url %>" class="card-img-top shadow-border" style="max-height: 200px; max-width: 200px;">
+                                            </div>
+                                            <div class="card-footer">
+                                                <h4 style="font-weight: bold;"><%= producto.precio %> $</h4>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const btnCuadricula = document.getElementById("btnCuadricula");
+      const btnLista = document.getElementById("btnLista");
+      const productosContainer = document.querySelector(".row.row-cols-1.row-cols-md-3.g-4");
+  
+      // Verificar si hay un estado guardado en el almacenamiento local
+      const estadoGuardado = localStorage.getItem("estadoVista");
+      if (estadoGuardado === "cuadricula") {
+        productosContainer.classList.remove("row-cols-md-1");
+        productosContainer.classList.add("row-cols-md-3");
+      } else if (estadoGuardado === "lista") {
+        productosContainer.classList.remove("row-cols-md-3");
+        productosContainer.classList.add("row-cols-md-1");
+      }
+  
+      btnCuadricula.addEventListener("click", function() {
+        productosContainer.classList.remove("row-cols-md-1");
+        productosContainer.classList.add("row-cols-md-3");
+  
+        // Guardar el estado seleccionado en el almacenamiento local
+        localStorage.setItem("estadoVista", "cuadricula");
+      });
+  
+      btnLista.addEventListener("click", function() {
+        productosContainer.classList.remove("row-cols-md-3");
+        productosContainer.classList.add("row-cols-md-1");
+  
+        // Guardar el estado seleccionado en el almacenamiento local
+        localStorage.setItem("estadoVista", "lista");
+      });
+    });
+  </script>
 </html>

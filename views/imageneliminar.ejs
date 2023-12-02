@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-      
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-<title>Editar Imagen</title>
+<title>Eliminar Imagen</title>
     <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
 </head>
 <head>
@@ -34,10 +33,10 @@
             <div class="col-md-4 mx-auto">
                 <div class="card text-center">
                     <div class="card-header">
-                        <h4 style="font-weight: bold;">Modificar imagenes</h4>
+                        <h4 style="font-weight: bold;">Eliminar imagenes</h4>
                     </div>
                     <div class="card-body">
-                        <form action="/admin/imagenes/update/<%= imagenes.id %>" method="POST">
+                        <form action="/admin/imagenes/delete/<%= imagenes.id %>" method="POST">
                             <div>
                                 <img src="<%= imagenes.url %>" alt="5px" style="border: 2px solid black;">
                             </div>
@@ -45,40 +44,25 @@
                                 <h6 class="mt-3" style="font-weight: bold;">Url de la imagen</h6>
                             </div>
                             <div class="form-group">
-                                <input type="url"  name="url" id="url" placeholder="Ingrese la url" maxlength="2048" required class="form-control" value="<%= imagenes.url %>">
+                                <input type="url"  name="url" id="url" placeholder="Ingrese la url" readonly maxlength="2048" class="form-control" value="<%= imagenes.url %>">
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Destacado</h6>
                             </div>
                             <div class="form-group">
-                              <select name="destacado" id="destacado" class="form-select">
-                                <option disabled value="">Destacado</option>
-                                <option value="Si" <% if (imagenes.destacado === 'Si') { %>selected<% } %>>Si</option>
-                                <option value="No" <% if (imagenes.destacado === 'No') { %>selected<% } %>>No</option>
-                              </select>
+                            <input type="text" name="destacado" id="destacado" maxlength="2" value="<%= imagenes.destacado %>" class="form-control" readonly>
                             </div>
                             <div style="text-align: left;">
-                                <h6 class="mt-3" style="font-weight: bold;">Producto</h6>
+                                <h6 class="mt-3" style="font-weight: bold;">ID del Producto</h6>
                             </div>
                             <div class="form-group">
-                              <select name="producto_id" id="producto_id" class="form-select">
-                                <option value="" disabled selected>Productos</option>
-                                <% if (productos && productos.length > 0) { %>
-                                  <% productos.forEach((producto) => { %>
-                                    <option value="<%= producto.id %>" <% if (producto.id === imagenes.producto_id) { %>selected<% } %>>
-                                      <%= producto.nombre %>
-                                    </option>
-                                  <% }); %>
-                                <% } else { %>
-                                  <option value="" selected>No existen productos en el sistema</option>
-                                <% } %>
-                              </select>
+                                <input type="number" name="producto_id" id="producto_id" placeholder="Ingrese la id del producto" class="form-control"  readonly value="<%= imagenes.producto_id %>" min="1">
                             </div>
                             <div class="form-group">
                                 <button type ="submit" class="btn btn-success btn-block mt-3">
-                                    Actualizar
-                                </button>
-                                <a href="/admin" class="btn btn-success btn-block mt-3" >Cancelar</a>
+                                  Eliminar
+                              </button>
+                              <a href="/admin" class="btn btn-success btn-block mt-3" >Cancelar</a>
                             </div> 
                         </form>
                     </div>

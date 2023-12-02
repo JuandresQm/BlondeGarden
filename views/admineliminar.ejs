@@ -3,7 +3,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
-<title>Editar Producto</title>
+<title>Eliminar Producto</title>
     <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
 </head>
 <head>
@@ -34,73 +34,58 @@
             <div class="col-md-4 mx-auto">
                 <div class="card text-center">
                     <div class="card-header">
-                        <h4 style="font-weight: bold;">Modificar producto</h4>
+                        <h4 style="font-weight: bold;">¿Está seguro de eliminar este producto?</h4>
                     </div>
                     <div class="card-body">
-                        <form action="/admin/productos/update/<%= productos.id %>" method="POST">
+                        <form action="/admin/productos/delete/<%= productos.id %>" method="POST">
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Nombre</h6>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre" required maxlength="255" class="form-control" value="<%= productos.nombre %>" >
+                                <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre" readonly maxlength="255" class="form-control" value="<%= productos.nombre %>" >
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Código</h6>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="codigo" id="codigo" placeholder="Ingrese el codigo "  required maxlength="255" class="form-control" value="<%= productos.codigo %>">
+                                <input type="text" name="codigo" id="codigo" placeholder="Ingrese el codigo "  readonly maxlength="255" class="form-control" value="<%= productos.codigo %>">
                             </div>
                              <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Precio</h6>
                             </div>
                             <div class="form-group">
-                                <input type="number" name="precio" id="precio" placeholder="Ingrese el precio "  required max="1000000" class="form-control" min="1" step="0.01" value="<%= productos.precio %>">
+                                <input type="number" name="precio" id="precio" placeholder="Ingrese el precio "  readonly max="1000000" class="form-control" min="1" step="0.01" value="<%= productos.precio %>">
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Descripción</h6>
                             </div>
                             <div class="form-group">
-                                <textarea maxlength="500" name="descripcion" id="descripcion" class="form-control" required maxlength="255"><%= productos.descripcion %></textarea>
+                                <textarea maxlength="500" name="descripcion" id="descripcion" class="form-control" readonly maxlength="255"><%= productos.descripcion %></textarea>
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Marca</h6>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="marca" id="marca" placeholder="Ingrese la marca" class="form-control" required maxlength="255" value="<%= productos.marca %>">
+                                <input type="text" name="marca" id="marca" placeholder="Ingrese la marca" class="form-control" readonly maxlength="255" value="<%= productos.marca %>">
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Uso</h6>
                             </div>
                             <div class="form-group">
-                                <select name="uso" id="uso" class="form-select">
-                                    <option disabled selected value="">Ingrese uso</option>
-                                    <option value="Multiuso" <% if (productos.uso === 'Multiuso') { %>selected<% } %>>Multiuso</option>
-                                    <option value="Interior" <% if (productos.uso === 'Interior') { %>selected<% } %>>Interior</option>
-                                    <option value="Exterior" <% if (productos.uso === 'Exterior') { %>selected<% } %>>Exterior</option>
-                                  </select>
+                                <input type="text" name="uso" id="uso" placeholder="Ingrese el uso" class="form-control"  readonly maxlength="255" value="<%= productos.uso %>">
                             </div>
                             <div style="text-align: left;">
                                 <h6 class="mt-3" style="font-weight: bold;">Categoria</h6>
                             </div>
                             <div class="form-group">
-                                <select name="categoria_id" id="categoria_id" class="form-select">
-                                    <option value="" disabled>Categorias</option>
-                                    <% if (categorias && categorias.length > 0) { %>
-                                      <% categorias.forEach((categoria) => { %>
-                                        <option value="<%= categoria.id %>" <% if (categoria.id === productos.categoria_id) { %>selected<% } %>>
-                                          <%= categoria.nombre %>
-                                        </option>
-                                      <% }); %>
-                                    <% } else { %>
-                                      <option value="" selected>No existen categorias en el sistema</option>
-                                    <% } %>
-                                  </select>
+                                <input type="number" name="categoria_id" id="categoria_id" placeholder="Ingrese la id de la categoria" readonly class="form-control" min="1" value="<%= productos.categoria_id %>">
                             </div>
                             <div class="form-group">
                                 <button type ="submit" class="btn btn-success btn-block mt-3">
-                                    Actualizar
+                                    Eliminar
                                 </button>
-                                <a href="/admin" class="btn btn-success btn-block mt-3" >Cancelar</a>
+                                <a href="/admin" class="btn btn-success btn-block mt-3">Cancelar</a>
+                            
                             </div> 
                         </form>
                     </div>
