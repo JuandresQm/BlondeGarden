@@ -5,16 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
-    <head>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a href="/" class="navbar-brand">
-                    <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
-                    BlondeGarden
-                </a>
-            </div>
-            <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
-        </nav>
         <Title><%= productos.nombre %></Title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
@@ -67,6 +57,20 @@
         </style>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a href="/" class="navbar-brand">
+                    <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+                    BlondeGarden
+                </a>
+            </div>
+            <% if (perfil == null) { %>
+                <a href="/signup" style="color:white; margin-right: 20px;">Registrarse</a>
+                <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
+              <% } else { %>
+                <a href="/logout" style="color:white; margin-right: 20px;">Cerrar sesión</a>
+              <% } %>
+        </nav>
         <div class="container">
             <div class="row product-container">
                 <div class="col-md-6">
@@ -116,8 +120,8 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button type="button" class="btn btn-primary">Añadir al carrito</button>
-                    </div>
+                        <a href="/payment/<%= productos.id %>" class="btn btn-primary">Comprar</a>
+                      </div>
                 </div>
             </div>
         </div>

@@ -2,19 +2,10 @@
 <html>
     <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
 <head>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <a href="/" class="navbar-brand">
-            <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
-            BlondeGarden
-          </a>
-          
-        </div>
-        <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
-      </nav>
     <Title>BlondeGarden</Title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    </head>
     <style>
         .navbar-brand {
             display: flex;
@@ -22,8 +13,8 @@
         }
 
         .navbar-brand img {
-            height: 2em; /* Ajusta la altura de la imagen al tamaño del texto */
-            margin-right: 1px; /* Espacio entre la imagen y el texto */
+            height: 2em;
+            margin-right: 1px; 
         }
 
         a {
@@ -49,21 +40,23 @@ background: aliceblue;
 box-sizing: x(8%, 300px);
 width: max(8%, 300px);
 display: inline-block;
-position: absolute;
-}
+position: fixed;
+transition: transform 0.3s ease;}
+
 .principal {
   position: absolute;
   left: 0;
   right: 0;
   height: 100vh;
-  margin-left: max(10%, 330px);
+  margin-left: 0;
   padding: 0 5px;
   text-align: justify;
   background: #e4ebf5;
+  transition: margin-left 0.3s ease;
 }
-/*Hasta aquí ya tenemos un menu lateral fijo,
-ahora viene ponerlo bonito*/
-
+.principal.expanded {
+  margin-left: max(10%, 330px); 
+}
 .lateral header{
 font-weight: bold;
 font-size: 1.5rem;
@@ -103,19 +96,82 @@ color: black;
   align-items: center;
   margin-bottom: 20px;
 }
-.table-striped tbody tr:nth-of-type(odd) {
-      background-color: var(--bs-primary); /* Color para filas impares */
-    }
-
-    .table-striped tbody tr:nth-of-type(even) {
-      background-color: var(--bs-secondary); /* Color para filas pares */
-    }
         .shadow-border {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
+  .card-img-top {
+            transition: transform 0.3s ease;
+        }
+        .card-img-top:hover {
+            transform: scale(1.1);
+        }
+        .lateral.hidden {
+  transform: translateX(-100%);
+}
+img{
+  max-width: 200px;
+  max-height: 200px;
+}
+
+@media (max-width: 767px) {
+  .principal.expanded {
+  display: none;
+}
+.lateral.hidden {
+  display: none;
+}
+  main {
+    width: 100%;
+  }
+  .principal {
+    margin-left: 0;
+    padding: 0 10px;
+  }
+  img{
+  max-width: 150px;
+  max-height: 150px;
+}
+.card.bg-light.mb-3.text-center.h-100.shadow-border{
+max-width: auto;
+max-height: 400px;
+}
+.custom-col{
+  margin-bottom: 0.5rem;
+}
+.card-header {
+  margin: -10px; /* Ajusta los márgenes según tus necesidades */
+}
+
+}
+.responsive-heading {
+  @media (max-width: 768px) {
+    font-size: 8px;
+    word-break: break-word; 
+  }
+}
   </style>
 <body>
-    <div class="lateral">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+        BlondeGarden
+      </a>
+      <div class="form-check form-switch" style="margin: 20px;">
+        <input class="form-check-input" type="checkbox" value="" id="toggleSidebar">
+        <label class="form-check-label" for="toggleSidebar" style="color: white;">Buscar</label>
+      </div>
+    </div>
+    <% if (perfil == null) { %>
+      <a href="/signup" style="color:white; margin-right: 20px;">Registrarse</a>
+      <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
+    <% } else { %>
+      <a <% if(perfil=='admin') {%> href="/admin" <% } %> style="color:white; margin-right: 20px;" ><%= perfil %></a>
+      <a href="/logout" style="color:white; margin-right: 20px;">Cerrar sesión</a>
+    <% } %>
+  </nav>
+    <div class="lateral hidden">
+       <br><br><br><br>
         <form action="/buscar" method="post">
           <div style="margin: 15px;">
             <div class="form-floating" style="margin-bottom: 20px;">
@@ -129,12 +185,16 @@ color: black;
               <label for="descripcion">Buscar descripción</label>
             </div>
           </div>
+          <% var catUnicas = new Set(); %>
           <div class="form-floating" style="margin-bottom: 20px;">
             <select name="categoria" id="categoria" class="form-select" style="margin: 15px; width: 300px;">
               <option value="" selected>Ingrese categoría</option>
-              <% categorias.forEach(categoria => { %>
-              <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
-              <% }); %>
+              <% productos.forEach(producto => { %>
+                <% if (!catUnicas.has(producto.categoriaNombre)) {
+                  catUnicas.add(producto.categoriaNombre); %>
+              <option value="<%= producto.categoriaNombre %>"><%= producto.categoriaNombre %></option>
+              <% }}); %>
+              
             </select>
             <label for="categoria">Categorías</label>
           </div>
@@ -166,11 +226,11 @@ color: black;
         </div>
         </form>
       </div>
-    <body>
     <div class="principal">
+      <br><br><br> <br>
         <div class="card text-center shadow-border">
             <div class="card-header">
-                <h2 style="font-weight: bold;">Bienvenido</h2>
+              <h2 style="font-weight: bold;">Bienvenido<%= perfil !== undefined  ? ',' : '' %> <%= perfil %> </h2>
 <div class="btn-group" role="group" aria-label="Vista de productos">
   <input type="radio" class="btn-check" name="vistaProductos" id="btnCuadricula" autocomplete="off" checked>
   <label class="btn btn-outline-primary" for="btnCuadricula">Cuadrícula</label>
@@ -178,66 +238,94 @@ color: black;
   <label class="btn btn-outline-primary" for="btnLista">Lista</label>
 </div>
             </div>
-            <div class="card-body  justify-content-center ">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <% for(const producto of productos) { %>
-                        <% for(const imagen of imagenes) { %>
-                            <% if (imagen.producto_id == producto.id && imagen.destacado == "Si") { %>
-                                <div class="col custom-col">
-                                    <a href="/info/<%= producto.id%>">
-                                        <div class="card bg-light mb-3 text-center h-100 shadow-border ">
-                                            <div class="card-header" >
-                                                <h4 style="margin-top: 10px; font-weight: bold;"><%= producto.nombre %></h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <img src="<%= imagen.url %>" class="card-img-top shadow-border" style="max-height: 200px; max-width: 200px;">
-                                            </div>
-                                            <div class="card-footer">
-                                                <h4 style="font-weight: bold;"><%= producto.precio %> $</h4>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            <% } %>
-                        <% } %>
-                    <% } %>
-                </div>
-            </div>
+            <div class="card-body justify-content-center">
+              <div class="row row-cols-3 row-cols-md-3 g-4">
+                <% for (const producto of productos) { %>
+  <% if (producto.destacado === "Si") { %>
+    <div class="col custom-col">
+      <a href="/info/<%= producto.id %>">
+        <div class="card bg-light mb-3 text-center h-100 shadow-border">
+          <div class="card-header">
+            <h4 class="responsive-heading" style="margin-top: 10px; font-weight: bold;"><%= producto.nombre %></h4>
+          </div>
+          <div class="card-body">
+              <img src="<%= producto.url %>" class="card-img-top shadow-border">
+            <% } %>
+          </div>
+          <div class="card-footer">
+            <h4 class="responsive-heading" style="font-weight: bold;"><%= producto.precio %> $</h4>
+          </div>
         </div>
+      </a>
     </div>
-    
+  <% } %>
+
 </body>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const btnCuadricula = document.getElementById("btnCuadricula");
-      const btnLista = document.getElementById("btnLista");
-      const productosContainer = document.querySelector(".row.row-cols-1.row-cols-md-3.g-4");
-  
-      // Verificar si hay un estado guardado en el almacenamiento local
-      const estadoGuardado = localStorage.getItem("estadoVista");
-      if (estadoGuardado === "cuadricula") {
-        productosContainer.classList.remove("row-cols-md-1");
-        productosContainer.classList.add("row-cols-md-3");
-      } else if (estadoGuardado === "lista") {
-        productosContainer.classList.remove("row-cols-md-3");
-        productosContainer.classList.add("row-cols-md-1");
-      }
-  
-      btnCuadricula.addEventListener("click", function() {
-        productosContainer.classList.remove("row-cols-md-1");
-        productosContainer.classList.add("row-cols-md-3");
-  
-        // Guardar el estado seleccionado en el almacenamiento local
-        localStorage.setItem("estadoVista", "cuadricula");
-      });
-  
-      btnLista.addEventListener("click", function() {
-        productosContainer.classList.remove("row-cols-md-3");
-        productosContainer.classList.add("row-cols-md-1");
-  
-        // Guardar el estado seleccionado en el almacenamiento local
-        localStorage.setItem("estadoVista", "lista");
-      });
+  document.addEventListener("DOMContentLoaded", function() {
+  const btnCuadricula = document.getElementById("btnCuadricula");
+  const btnLista = document.getElementById("btnLista");
+  const productosContainer = document.querySelector(".row.row-cols-3.row-cols-md-3.g-4");
+
+  // Verificar si hay un estado guardado en el almacenamiento local
+  const estadoGuardado = localStorage.getItem("estadoVista");
+  if (estadoGuardado === "cuadricula") {
+    productosContainer.classList.remove("row-cols-1", "row-cols-md-1");
+    productosContainer.classList.add("row-cols-3", "row-cols-md-3");
+    btnCuadricula.checked = true; // Marcar el botón cuadrícula
+  } else if (estadoGuardado === "lista") {
+    productosContainer.classList.remove("row-cols-3", "row-cols-md-3");
+    productosContainer.classList.add("row-cols-1", "row-cols-md-1");
+    btnLista.checked = true; // Marcar el botón lista
+
+    // Establecer estilos adicionales para la vista de lista
+    const cards = document.querySelectorAll(".custom-col .card");
+    cards.forEach(card => {
+      card.style.maxWidth = "400px";
+      card.style.margin = "0 auto";
     });
-  </script>
+  }
+
+  btnCuadricula.addEventListener("click", function() {
+    productosContainer.classList.remove("row-cols-1", "row-cols-md-1");
+    productosContainer.classList.add("row-cols-3", "row-cols-md-3");
+
+    // Guardar el estado seleccionado en el almacenamiento local
+    localStorage.setItem("estadoVista", "cuadricula");
+
+    // Restablecer estilos para la vista de cuadrícula
+    const cards = document.querySelectorAll(".custom-col .card");
+    cards.forEach(card => {
+      card.style.maxWidth = "";
+      card.style.margin = "";
+    });
+  });
+
+  btnLista.addEventListener("click", function() {
+    productosContainer.classList.remove("row-cols-3", "row-cols-md-3");
+    productosContainer.classList.add("row-cols-1", "row-cols-md-1");
+
+    // Guardar el estado seleccionado en el almacenamiento local
+    localStorage.setItem("estadoVista", "lista");
+
+    // Establecer estilos adicionales para la vista de lista
+    const cards = document.querySelectorAll(".custom-col .card");
+    cards.forEach(card => {
+      card.style.maxWidth = "400px";
+      card.style.margin = "0 auto";
+    });
+  });
+});
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleSidebarButton = document.getElementById("toggleSidebar");
+    const sidebar = document.querySelector(".lateral");
+    const principal = document.querySelector(".principal");
+
+    toggleSidebarButton.addEventListener("click", function() {
+      sidebar.classList.toggle("hidden");
+      principal.classList.toggle("expanded");
+    });
+  });
+  
+</script>
 </html>

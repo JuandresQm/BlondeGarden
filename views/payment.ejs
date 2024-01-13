@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/morph/dist/css/morph.min.css">
+    <title>Pago</title>
+    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
+    <style>
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 2em; 
+            margin-right: 1px;
+        }
+        a {
+            text-decoration: none;
+        }
+        .div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shadow-border {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+            .col-md-2.prod {
+                position: fixed; 
+                top: 25%; 
+                left: 77%;
+}
+@media (max-width: 768px) {
+  .col-md-2.prod {
+    position: static;
+    top: auto;
+    left: auto;
+    margin-bottom: 20px;
+  }
+}
+.prueba{
+display: none;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+                BlondeGarden
+            </a>
+        </div>
+    </nav>
+    <div class="col-md-2 prod" >
+    <div class="card text-center shadow-border">
+        <div class="card-body justify-content-center">
+        <div class="card bg-light text-center shadow-border">
+          <div class="card-header">
+            <p style="margin-top: 10px; font-weight: bold;"><%= producto.nombre %></p>
+          </div>
+          <div class="card-body">
+            <img src="<%= imagen.url %>" class="card-img-top shadow-border" style="max-width: 100px; max-height: 100px;">
+          </div>
+          <div class="card-footer">    
+            <p style="font-weight: bold;"><%= producto.precio %> $</p>
+          </div>
+        </div>
+    </div>
+</div></div>
+
+   <br><br>
+<div class="container p-6">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card text-center shadow-border">
+                <div class="card-header">
+                        <h2 style="font-weight: bold;">Datos de pago</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="payment-form" action="/payments" method="POST">
+                            <div class="prueba">
+                                <input type="text" id="nombre" name="nombre" value="<%= producto.nombre %>">
+                                <input type="text" id="precio" name="precio" value="<%= producto.precio %>">
+                                <input type="text" id="id" name="id" value="<%= producto.id %>">
+                                <input type="text" id="idCliente" name="idCliente" value="<%= datos.id %>">
+                                </div>
+
+                            <div class="form-group">
+                                <div class="form-floating" style="margin-bottom: 20px;"> 
+                                    <input type="number" step="1" min="1" max="100" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad del producto" required>
+                                    <label for="name">Cantidad del Producto</label>
+                                </div>
+                                
+                                <div class="form-floating" style="margin-bottom: 20px;"> 
+                                    <input type="text" name="name" id="name" placeholder="Ingrese su nombre" class="form-control" maxlength="255" required>
+                                    <label for="name">Nombre y apellido</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-2 col-form-label" style="font-weight: bold;">Correo</label>
+                                <div class="col-sm-10">
+                                  <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value="<%= datos.correo %>">
+                                </div>
+                              </div>
+                            <div class="form-group">
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="text" name="card-number" id="card-number" placeholder="Ingrese el número de tarjeta" class="form-control" maxlength="17" required>
+                                    <label for="card-number">Número de tarjeta</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <h6 style="font-weight: bold; margin-left: 10px;">Fecha de vencimiento</h6>
+                                    <div class="div-centrado">
+                                        <input type="number" min="01" max="12" maxlength="2" id="expiration-month" name="expiration-month" class="form-control" style="max-width: 20%; display: inline-block; margin-bottom: 15px; margin-right: 25px;" placeholder="Mes" required>
+                                    <input type="number" min="2024" max="2034" maxlength="4" id="expiration-year" name="expiration-year" class="form-control" style="max-width: 20%; display: inline-block; margin-bottom: 15px;" placeholder="Año" required>
+                             </div>
+                                    </div>
+                            <div class="form-group">
+                                <div class="form-floating" style="margin-bottom: 20px;">
+                                    <input type="text" name="cvv" id="cvv" placeholder="Ingrese el código CVV" class="form-control" maxlength="3" required>
+                                    <label for="cvv">Código CVV</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="div-centrado"> <button type="submit" style="margin-bottom: 20px;" class="btn btn-success btn-block mt-3">
+                                    Pagar
+                                </button> </div>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    
+        const monthInput = document.getElementById('expiration-month');
+const yearInput = document.getElementById('expiration-year');
+
+monthInput.addEventListener('input', restrictInputLength);
+yearInput.addEventListener('input', restrictInputLength);
+
+function restrictInputLength(event) {
+  const input = event.target;
+  const maxLength = input.getAttribute('maxlength');
+  if (input.value.length > maxLength) {
+    input.value = input.value.slice(0, maxLength);
+  }
+}
+    </script>
+</body>
+</html>

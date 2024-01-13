@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlondeGarden || Admin</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
+</head>
+<style>
+   .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand img {
+  height: 2em;
+  margin-right: 1px;
+}
+
+html{
+height:100%;
+}
+.div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+      background-color: var(--bs-primary); /* Color para filas impares */
+    }
+
+    .table-striped tbody tr:nth-of-type(even) {
+      background-color: var(--bs-secondary); /* Color para filas pares */
+    }
+    a {
+            text-decoration: none;
+        }
+        .shadow-border {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  .table-cat {
+  width: 100%;
+}
+
+/* Estilos para tamaños de pantalla de teléfonos */
+@media (max-width: 767px) {
+  .table-cat {
+    width: 200%;
+  }
+  
+  .navbar-brand img {
+    height: 1.5em;
+    margin-right: 0;
+  }
+}
+
+
+  </style>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+        BlondeGarden
+      </a>
+      
+    </div>
+    <a href="/admin" style="color:white; margin-right: 20px;">Volver</a>
+    <a href="/logout" style="color:white; margin-right: 20px;">Cerrar sesión</a> 
+  </nav>
+  <br><br><br><br>
+  <div class="container-fluid"> 
+<table class="table table-cat table-hover table-striped">
+  <thead>
+    <h2 style="text-align: center;">Transacciones  (<%= transacciones.length %>)</h2>
+ <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Total</th>
+    <th scope="col">Fecha</th>
+    <th scope="col">Ip Cliente</th>
+    <th scope="col">Id. Cliente</th>
+    <th scope="col">Id. Producto</th>
+  </tr></thead>
+  
+  <tbody>
+    <% transacciones.forEach((transaccion, index) => { %>
+      <tr class="<%= index % 2 === 0 ? 'primary' : 'secondary' %>">
+        <td><%= transaccion.transaccion_id %></td>
+        <td><%= transaccion.cantidad %></td>
+        <td><%= transaccion.total_pagado %></td>
+        <td><%= transaccion.fecha %></td>
+        <td><%= transaccion.ip_cliente %></td>
+        <% clientes.forEach(cliente => { %>
+            <% if (cliente.id == transaccion.cliente_id) { %>
+                <td title="<%= cliente.cliente %>"> <strong><%= transaccion.cliente_id %></strong></td>
+                <% } %>
+                <% }); %>
+        <% productos.forEach(producto => { %>
+            <% if (producto.id == transaccion.producto_id) { %>
+        <td title="<%= producto.nombre %>"> <strong><%= transaccion.producto_id %></strong></td>
+        <% } %>
+        <% }); %>
+      </tr>
+    <% }); %>
+  </tbody>
+</table> 
+</body>
+</html>

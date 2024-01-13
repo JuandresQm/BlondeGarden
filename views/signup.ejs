@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <style>
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand img {
+      height: 2em; 
+      margin-right: 1px; 
+    }
+    .div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+    a {
+      text-decoration: none;
+    }
+  </style>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a href="/" class="navbar-brand">
+          <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta">
+          BlondeGarden
+        </a>
+        </div>
+        <a href="/login" style="color:white; margin-right: 20px;">Iniciar sesión</a>
+      </nav>
+      <br><br><br>
+    <div class="container p-4">
+      <div class="row">
+        <div class="col-md-4 mx-auto">
+          <div class="card text-center">
+            <div class="card-header">
+              <h2 style="font-weight: bold;">Registro</h2>
+            </div>
+            <div class="card-body">
+              <form action="/signup" method="post">
+                <div class="form-group">
+                  <div class="form-floating" style="margin-bottom: 20px;">
+                    <input type="text" name="cliente" id="cliente" placeholder="Ingrese su usuario" class="form-control" required maxlength="255">
+                    <label for="cliente">Ingrese su usuario</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-floating" style="margin-bottom: 20px;">
+                    <input type="text" name="correo" id="correo" placeholder="Ingrese su correo" class="form-control" required maxlength="255">
+                    <label for="correo">Ingrese su correo</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-floating" style="margin-bottom: 20px;">
+                    <input type="password" name="password" id="password" placeholder="Ingrese su contraseña" class="form-control" required maxlength="255">
+                    <label for="password">Ingrese su contraseña</label>
+                  </div>
+                </div>
+                <div class="form-group div-centrado">
+                    <div class="g-recaptcha" data-sitekey="6LezRz8pAAAAAJ6atgANeqNh2fneG5B8cES35W0d"></div>
+              
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-success btn-block mt-3">
+                    Registrarse
+                  </button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <small class="form-text text-muted">
+                      <strong> ¿Tienes una cuenta?
+                      <a href="/login">
+                      Inicia sesión</a></strong> 
+                    </small>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

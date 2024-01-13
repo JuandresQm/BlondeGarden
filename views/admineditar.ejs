@@ -28,10 +28,53 @@
     height: 2em; /* Ajusta la altura de la imagen al tamaño del texto */
     margin-right: 1px; /* Espacio entre la imagen y el texto */
   }
+  #mensaje {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.toast-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.toast-container {
+  animation: toastZoomIn 0.5s ease-in-out;
+}
+
+@keyframes toastZoomIn {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
   </style>
       <div class="container p-4">
         <div class="row">
             <div class="col-md-4 mx-auto">
+                <div id="mensaje" style="display: none;">
+                    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" >
+                      <div class="toast-header">
+                        <strong class="me-auto"><h4>¡Alerta!</h4></strong>
+                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                          <span aria-hidden="true"></span>
+                        </button>
+                      </div>
+                      <div class="toast-body">
+                       <h5>Debes crear una categoria.</h5> 
+                      </div>
+                    </div>
+                  </div>
                 <div class="card text-center">
                     <div class="card-header">
                         <h4 style="font-weight: bold;">Modificar producto</h4>
@@ -72,7 +115,7 @@
                                 <h6 class="mt-3" style="font-weight: bold;">Uso</h6>
                             </div>
                             <div class="form-group">
-                                <select name="uso" id="uso" class="form-select">
+                                <select name="uso" id="uso" class="form-select" required>
                                     <option disabled selected value="">Ingrese uso</option>
                                     <option value="Multiuso" <% if (productos.uso === 'Multiuso') { %>selected<% } %>>Multiuso</option>
                                     <option value="Interior" <% if (productos.uso === 'Interior') { %>selected<% } %>>Interior</option>
@@ -83,19 +126,24 @@
                                 <h6 class="mt-3" style="font-weight: bold;">Categoria</h6>
                             </div>
                             <div class="form-group">
-                                <select name="categoria_id" id="categoria_id" class="form-select">
-                                    <option value="" disabled>Categorias</option>
-                                    <% if (categorias && categorias.length > 0) { %>
-                                      <% categorias.forEach((categoria) => { %>
-                                        <option value="<%= categoria.id %>" <% if (categoria.id === productos.categoria_id) { %>selected<% } %>>
-                                          <%= categoria.nombre %>
-                                        </option>
-                                      <% }); %>
-                                    <% } else { %>
-                                      <option value="" selected>No existen categorias en el sistema</option>
-                                    <% } %>
-                                  </select>
-                            </div>
+                                <select name="categoria_id" id="categoria_id" class="form-select" required>
+                                  <option value="" disabled>Categorías</option>
+                                  <% if (categorias && categorias.length > 0) { %>
+                                    <% categorias.forEach((categoria) => { %>
+                                      <option value="<%= categoria.id %>" <% if (categoria.id === productos.categoria_id) { %>selected<% } %>>
+                                        <%= categoria.nombre %>
+                                      </option>
+                                    <% }); %>
+                                  <% } else { %>
+                                    <option value="" disabled selected>No existen categorías en el sistema</option>
+                                  <% } %>
+                                </select>
+                                <% if (!(categorias && categorias.length > 0)) { %>
+                                  <small class="form-text text-muted">
+                                    <a href="/admin/categorias/crear">Crear una categoría</a>
+                                  </small>
+                                <% } %>
+                              </div>
                             <div class="form-group">
                                 <button type ="submit" class="btn btn-success btn-block mt-3">
                                     Actualizar
@@ -108,5 +156,25 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const form = document.getElementById('create');
+          const mensaje = document.getElementById('mensaje');
+      
+          form.addEventListener('submit', function(event) {
+            const categoriaSelect = document.getElementById('categoria_id');
+            const selectedValue = categoriaSelect.value;
+      
+            if (selectedValue === '') {
+              event.preventDefault(); // Evita el envío del formulario
+              mensaje.style.display = 'flex'; // Muestra el mensaje en pantalla
+              setTimeout(function() {
+                window.location.href = '/admin/categorias/crear'; // Redirige a la página de creación de categorías después de 3 segundos
+              }, 3000);
+            }
+          });
+        });
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
