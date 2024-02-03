@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="<%= productos.nombre %>">
+    <meta property="og:description" content="<%= productos.descripcion %>">
+    <meta property="og:image" content="<%= imagenes.url %>">
+    <meta property="og:type" content="website">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HZ005ZXKW"></script>
     <link rel="icon" type="image/x-icon" href="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png">
         <Title><%= productos.nombre %></Title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,9 +59,53 @@
                 justify-content: center;
                 margin-top: 20px;
             }
+            .div-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rating-container {
+                          position: relative;
+                        }
+                      
+                        .indicator {
+                          position: absolute;
+                          transform: translateX(-50%);
+                          pointer-events: none;
+                          background-color: #f8f9fa;
+                          padding: 5px;
+                          border-radius: 4px;
+                          font-size: 12px;
+                        }
+                      
+                        @media (max-width: 576px) {
+                          .indicator {
+                            font-size: 10px;
+                          }
+                        }
+                        .product-rating {
+                          display: flex;
+                          align-items: center;
+                        }
+                      
+                        .average-rating {
+                          margin-right: 5px;
+                        }
+                      
+                        .plant-image {
+                          width: 50px;
+                          height: auto;
+                          margin-right: 2px;
+                        }
+                      
+                        @media (max-width: 576px) {
+                          .plant-image {
+                            width: 25px;
+                          }
+                        }
         </style>
     </head>
-    <body>
+    <body >
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a href="/" class="navbar-brand">
@@ -71,16 +120,22 @@
                 <a href="/logout" style="color:white; margin-right: 20px;">Cerrar sesión</a>
               <% } %>
         </nav>
-        <div class="container">
+        <div class="container" >
             <div class="row product-container">
                 <div class="col-md-6">
                     <img src="<%= imagenes.url %>" alt="Product Image" class="product-image shadow-border" style="max-width: 400px;">
                 </div>
                 <div class="col-md-6">
-                    <h2 class="product-title"><%= productos.nombre %> </h2>
-                    <p class="product-description"> <%= categorias.nombre %> </p>
-                    <p class="product-price"><%= productos.precio %>$ </p>
-                    <p><%= productos.codigo %></p>
+                  <div itemscope itemtype="http://schema.org/Product"> 
+                    <h2 class="product-title" itemprop="name"><%= productos.nombre %></h2>
+                    <p class="product-description" itemprop="category"><%= categorias.nombre %></p> 
+                  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <p class="product-price">
+                      <span itemprop="priceCurrency" content="USD">$</span>
+                      <span itemprop="price"><%= productos.precio %></span>
+                    </p>
+                  </div></div>
+                <p itemprop="productID"><%= productos.codigo %></p>
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
@@ -89,7 +144,7 @@
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
+                                <div class="accordion-body" itemprop="description">
                                     <%= productos.descripcion %>
                                 </div>
                             </div>
@@ -101,7 +156,7 @@
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
+                                <div class="accordion-body" itemprop="brand">
                                     <%= productos.marca %>
                                 </div>
                             </div>
@@ -119,6 +174,38 @@
                             </div>
                         </div>
                     </div>
+                    <style>
+                       
+                      </style>
+                      
+                      <div class="product-rating">
+                        <% if (promedio) { %>
+                          <p class="average-rating">Calificación promedio: <%= promedio %></p>
+                          <% for (let i = 0; i < Math.floor(promedio); i++) { %>
+                            <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta" class="plant-image">
+                          <% } %>
+                          <% if (promedio % 1 !== 0) { %>
+                            <img src="https://images.vexels.com/media/users/3/200977/isolated/lists/da7cf605cded0d64979f81a813723465-mano-dando-icono-de-planta.png" alt="Icono de planta" class="plant-image" style="clip-path: inset(0 0 50% 0);">
+                          <% } %>
+                        <% } else { %> 
+                          <p class="average-rating">Calificación promedio: 0 </p> 
+                        <% } %> 
+                        <% if (perfil !== null) { %>
+                          <p class="user-rating">Tu calificación: <%= puntuacion %></p>
+                        <% } %>
+                      </div>
+                    <% if (perfil !== null) { %>
+                        <div class="rating-container">
+                          <form action="/calificar/<%= productos.id %>" method="POST">
+                            <label style="display: none;" for="puntuacion" class="form-label" id="puntuacion-label"><%= puntuacion %></label>
+                            <input type="range" class="form-range" min="1" max="5" step="1" id="puntuacion" name="puntuacion" value="<%= puntuacion  %>" onchange="updateLabel(this.value)">
+                            <div id="puntuacion-indicator" class="indicator"><%= puntuacion  %></div>
+                            <div class="div-centrado" style="margin-top: 35px;">
+                              <button type="submit" class="btn btn-primary btn-sm">Calificar</button>
+                            </div>
+                          </form>
+                        </div>
+                      <% } %>
                     <div class="button-container">
                         <a href="/payment/<%= productos.id %>" class="btn btn-primary">Comprar</a>
                       </div>
@@ -127,5 +214,36 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function updateLabel(value) {
+              document.getElementById('puntuacion-label').textContent = value;
+              var indicator = document.getElementById('puntuacion-indicator');
+              var range = document.getElementById('puntuacion');
+              var rangeWidth = range.offsetWidth;
+              var min = parseInt(range.min);
+              var max = parseInt(range.max);
+              var position = ((value - min) / (max - min)) * rangeWidth;
+              indicator.style.left = position + 'px';
+              
+              if (value == 0) {
+                indicator.style.display = 'none';
+              } else {
+                indicator.style.display = 'block';
+                indicator.textContent = value;
+              }
+            }
+
+            window.addEventListener('load', function() {
+              var initialRating = document.getElementById('puntuacion').value;
+              updateLabel(initialRating);
+            });
+          </script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-0HZ005ZXKW');
+          </script>
     </body>
 </html>

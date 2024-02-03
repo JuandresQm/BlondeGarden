@@ -5,6 +5,14 @@
     <Title>BlondeGarden</Title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0HZ005ZXKW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0HZ005ZXKW');
+</script>
     </head>
     <style>
         .navbar-brand {
@@ -143,8 +151,8 @@ max-height: 400px;
 }
 
 }
+@media (max-width: 768px) {
 .responsive-heading {
-  @media (max-width: 768px) {
     font-size: 8px;
     word-break: break-word; 
   }
@@ -220,6 +228,16 @@ max-height: 400px;
             </select>
             <label for="marca">Marcas</label>
           </div>
+          <div class="form-floating" style="margin-bottom: 20px;">
+  <select name="promedio" id="promedio" class="form-select" style="margin: 15px; width: 300px;">
+    <option selected disabled value="">Agrupar por promedio</option>
+    <option value="todos">Todos</option>
+    <option value="menos-de-3">Menos de 3</option>
+    <option value="3-a-4">3 a 4</option>
+    <option value="mayor-o-igual-a-4">Mayor o igual a 4</option>
+  </select>
+  <label for="promedio">Agrupar por promedio</label>
+</div>
           <div style="margin-left: 45px;">
           <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
           <a class="btn btn-primary"  href="/">Restablecer</a>
